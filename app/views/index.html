@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block page_title %}
+	JSON usage demo
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-large">
+        JSON usage demo
+				<span class="heading-secondary">Viewing and editing a JSON data object in a session</span>
+      </h1>
+
+			<ul class="version-list">
+				<li>
+					<p class="font-medium">
+						<a href="/1-0/index?&accountID=account-1">Account 1 data</a><br>
+						/1-0/index?&accountID=account-1
+					</p>
+				</li>
+				<li>
+					<p class="font-medium">
+						<a href="/1-0/index?&accountID=account-2">Account 2 data</a><br>
+						/1-0/index?&accountID=account-2
+					</p>
+				</li>
+				<li>
+					<p class="font-medium"><br>
+						<a href="/1-0/index?reqResetData=reset&accountID=account-1">RESET DATA IN SESSION (back to json file contents)</a><br>
+						/1-0/index?reqResetData=reset
+					</p>
+				</li>
+			</ul>
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}
+
+
