@@ -7,15 +7,14 @@ module.exports = function(router,pageData) {
         //Set req.session.pageData for first time or if query string of reqResetData is present
         if(!req.session.pageData || req.query.reqResetData) {
             req.session.pageData = pageData
+            req.session.pageData.selectedAccount = "account-1"
         }
+        req.session.pageData.selectedAccount = req.query.accountID || req.session.pageData.selectedAccount
         next();
     });
 
     //INDEX
     router.get('/' + version + '/index', function (req, res) {
-
-        // Saves the selected account id to the session either from query string or as itself
-        req.session.pageData.selectedAccount = req.query.accountID || req.session.pageData.selectedAccount
 
         //Render page
         res.render(version + '/index', {
