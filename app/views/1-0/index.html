@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
-{% set _selectedAccount = {} %}
-<!--FOR loop over all keys(accounts) in pageData.accounts object-->
-{% for key, account in pageData.accounts %}
+{% set _selectedAccount = "" %}
+<!--FOR loop over all keys (accounts) in myData.accounts object-->
+{% for key, account in myData.accounts %}
     <!--IF check on each key to see if it matches the ID saved from the query string-->
-    {% if key == pageData.selectedAccount %}
+    {% if key == myData.selectedAccount %}
         {% set _selectedAccount = account %}
     {% endif %}
 {% endfor %}
@@ -31,7 +31,13 @@
 			<header> 
 				<h1 class="heading-large" >
 					Loop through account's users
-                    <span class="heading-secondary">{{_selectedAccount.name}}, {{_selectedAccount.users.length}} users</span>
+                    <span class="heading-secondary">
+                    {% if _selectedAccount != "" %}
+                        {{_selectedAccount.name}}, {{_selectedAccount.users.length}} users
+                    {% else %}
+                        Account doesn't exist
+                    {% endif %}
+                    </span>
 				<h1>
 			</header>
 		</div>
@@ -39,8 +45,11 @@
 		</div>
 	</div>
 
+    {% if _selectedAccount != "" %}
     <div class="grid-row">
 		<div class="column-two-thirds">
+
+            {% if _selectedAccount.users.length > 0 %}
             <form method="POST">
                 <div class="form-section">
                     <fieldset>
@@ -50,7 +59,7 @@
                         {% for user in _selectedAccount.users %}
                         <div class="form-group">
                             <label class="form-label" for="{{user.name}}-{{loop.index}}">
-                                {{user.name}}'s age
+                                <span class="font-medium">{{user.name}}'s age is <span class="bold">{{user.age}}</span></span>
                             </label>
                             <input class="form-control" id="{{user.name}}-{{loop.index}}" name="accountusers" type="number" value="{{user.age}}" >
                         </div>
@@ -60,18 +69,15 @@
                     <input class="button" type="submit" value="Save">
                 </div>
             </form>
+            {% else %}
+            <p>No users on account</p>
+            {% endif %}
+
 		</div>
 		<div class="column-one-third">
-            <ul class="list list-bullet">
-                <!--
-                    FOR loop over each user in account
-                -->
-                {% for user in _selectedAccount.users %}
-                <li>{{user.name}}'s age: {{user.age}}</li>
-                {% endfor %}
-            </ul>
 		</div>
 	</div>
+    {% endif %}
 
 </main>
 
