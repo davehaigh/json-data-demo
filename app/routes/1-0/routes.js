@@ -1,14 +1,15 @@
-module.exports = function(router,myData) {
+module.exports = function(router,_myData) {
     
     var version = "1-0";
 
-    //WILDCARD get /*
-    router.get('/' + version + '/*', function (req, res, next) {
+    //WILDCARD /*
+    router.all('/' + version + '/*', function (req, res, next) {
         //
         //Set req.session.myData for first time or if query string of resetSession is present
+        // IMPORTANT NOTE: req.session.myData may have already been set to session in a different version so need to force reset at time if you want to switch between versions with fresh data i.e. use the resetSession query string 
         //
         if(!req.session.myData || req.query.resetSession) {
-            req.session.myData = myData
+            req.session.myData = JSON.parse(JSON.stringify(_myData))
             req.session.myData.selectedAccount = "account-1"
         }
         //Set selectedAccount id on every get in case a query string was specified

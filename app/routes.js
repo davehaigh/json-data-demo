@@ -4,7 +4,7 @@ var router = express.Router()
 ////////////////////////////////////////////
 // myData object to pass to prototype versions //
 ////////////////////////////////////////////
-var myData = {
+var _myData = {
   // Fake Data JSON Files //
   accounts: {
     "account-1": require(__dirname + '/data/account-1.json'),
@@ -15,7 +15,7 @@ var myData = {
 
 //Version 1-0 routing
 //Pass myData variable as parameter into version specific routes file
-require('./routes/1-0/routes.js')(router,myData);
+require('./routes/1-0/routes.js')(router,JSON.parse(JSON.stringify(_myData)));
 
 // Route index page
 router.get('/', function (req, res) {
